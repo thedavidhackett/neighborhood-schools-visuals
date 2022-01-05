@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>HTML 5 Boilerplate</title>
+    <style>
+      html,
+      body,
+      .map {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+      .legend-block {
+        height: 1.5rem;
+        width: 1.5rem;
+        display: block;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+      }
+      .blue {
+        background-color: #36a3eb;
+      }
+      .red {
+        background-color: #ff6385;
+      }
+      .yellow {
+        background-color: #ffcc56;
+      }
+      .legend-size {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+      }
+      .legend-size span {
+        border: solid 1px black;
+        height: 1.5rem;
+        width: 1.5rem;
+        display: block;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+      }
+    </style>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.21/esri/themes/light/main.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row my-5">
+        <div class="col">
+          <div class="ms-5">
+            <h3>
+              Enrollment By Public School Type in Saint Louis 2000 to Present
+            </h3>
+            <p>
+              <small>
+                Less than twenty years ago two thirds of public school students
+                in Saint Louis still attended neighborhood schools. Now less
+                than an a third do.</small
+              >
+            </p>
+          </div>
+          <div><canvas id="stlEnrollment"></canvas></div>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-4 border-end">
+          <canvas id="publicSchools2000pie"></canvas>
+        </div>
+        <div class="col-4"><canvas id="publicSchools2020pie"></canvas></div>
+        <div class="col-4"><canvas id="charterSchools2020pie"></canvas></div>
+      </div>
+      <div class="row my-5">
+        <div class="col-4">
+          <canvas id="neighborhoodSchools2000pie"></canvas>
+        </div>
+        <div class="col-4"><canvas id="magnetSchools2000pie"></canvas></div>
+      </div>
+      <div class="row my-5">
+        <div class="col-12 px-5">
+          <h3>Saint Louis Public Schools by Race in 2020</h3>
+          <p>
+            <small
+              >Neighborhood schools have higher proportions of students of
+              color.</small
+            >
+          </p>
+        </div>
+        <div class="col-4">
+          <canvas id="neighborhoodSchools2020pie"></canvas>
+        </div>
+        <div class="col-4"><canvas id="magnetSchools2020pie"></canvas></div>
+        <div class="col-4"><canvas id="charterSchools2020pie2"></canvas></div>
+      </div>
+      <div class="row my-5">
+        <div class="col-12">
+          <div class="col-12 px-5">
+            <h3>
+              Saint Louis Public Schools by % of Students on Free/Reduced Price
+              Lunch in 2014
+            </h3>
+            <p>
+              <small
+                >Eligibility for Free/Reduced Price Lunch is used as a stand in
+                for low income. The data here is from 2014 since that is the
+                last year SLPS tracked eligibility.
+              </small>
+            </p>
+          </div>
+          <canvas id="freelunch"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="row h-100 my-5">
+      <div class="col-12 px-5">
+        <h3>Visualizing the Decline of the Neighborhood School</h3>
+        <p>
+          <small>
+            In 2000 neighborhood schools still comprised the majority of public
+            schools in Saint Louis. Twenty years later, the declining population
+            and the rise of charter schools has given way to a radically
+            different landscape.</small
+          >
+        </p>
+      </div>
+      <div class="col-6 h-100 ps-5 pe-3">
+        <p class="text-center mb-1">
+          <strong>Saint Louis Schools 2000-2001</strong>
+        </p>
+        <div class="map" id="schools2001"></div>
+      </div>
+      <div class="col-6 h-100 ps-3 pe-5 mb-3">
+        <p class="text-center mb-1">
+          <strong>Saint Louis Schools 2020-2021</strong>
+        </p>
+        <div class="map" id="schools2020"></div>
+      </div>
+      <div class="col-12 pt-4 pb-5">
+        <div class="ms-5 d-flex" style="width: fit-content">
+          <div class="me-3">
+            <div class="d-flex align-items-center mb-1">
+              <span class="legend-block blue"></span
+              ><small>Neighborhood School</small>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+              <span class="legend-block red"></span><small>Magnet School</small>
+            </div>
+            <div class="d-flex align-items-center mb-1">
+              <span class="legend-block yellow"></span
+              ><small>Charter School</small>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex flex-wrap">
+              <div class="legend-size">
+                <span style="height: 10px; width: 10px"></span>
+                <small> 0-250 Students</small>
+              </div>
+              <div class="legend-size">
+                <span style="height: 20px; width: 20px"></span>
+                <small>250-500 Students</small>
+              </div>
+              <div class="legend-size">
+                <span style="height: 30px; width: 30px"></span>
+                <small>500-750 Students</small>
+              </div>
+              <div class="legend-size">
+                <span style="height: 40px; width: 40px"></span>
+                <small>750+ Students</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://js.arcgis.com/4.21/"></script>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
